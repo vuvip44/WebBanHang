@@ -24,8 +24,8 @@ public interface BillRepo extends JpaRepository<Bill, Integer>{
 	Page<Bill> searchByDate(@Param("x") Date date, Pageable pageable);
 	
 	//Thong ke don theo thang
-	@Query("SELECT count(b.id),month(b.createdAt),year(b.createdAt) FROM Bill b GROUP BY month(b.createdAt),year(b.createdAt")
-	List<Object[]> countBill();
+//	@Query("SELECT count(b.id),month(b.createdAt),year(b.createdAt) FROM Bill b GROUP BY month(b.createdAt),year(b.createdAt")
+//	List<Object[]> countBill();
 	
 	//Xoa theo id
 	void deleteById(int id);

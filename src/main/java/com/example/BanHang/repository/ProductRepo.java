@@ -18,7 +18,7 @@ public interface ProductRepo extends JpaRepository<Product, Integer>{
 	Page<Product> searchByCategory(@Param("x")String category,Pageable pageable);
 	
 	//Tim theo gia
-	@Query("SELECT p FROM Product p WHERE p.price >=start AND p.price <=end")
+	@Query("SELECT p FROM Product p WHERE p.price >=:start AND p.price <=:end")
 	Page<Product> searchByPrice(@Param("start") double start,@Param("end") double end,Pageable pageable);
 	
 	//Xoa theo id
