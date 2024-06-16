@@ -5,11 +5,11 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class BillDTO {
+public class CartDTO {
 	private int id;
 	private String status;
 	private UserDTO userDTO;
 	
-	
-	private List<BillItemDTO> billItems;
+	private List<ItemSelectedDTO> items;
+	private double totalprice;
 }

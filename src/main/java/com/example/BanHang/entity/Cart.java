@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Bill extends TimeAuditable{
+public class Cart extends TimeAuditable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -24,6 +24,8 @@ public class Bill extends TimeAuditable{
 	@ManyToOne
 	private User user;
 	
-	@OneToMany(mappedBy = "bill",cascade = CascadeType.ALL,orphanRemoval = true)
-	private List<BillItem> billItems;
+	@OneToMany(mappedBy = "cart",cascade = CascadeType.ALL,orphanRemoval = true)
+	private List<ItemSelected> itemSelecteds;
+	
+	private double totalprice;
 }

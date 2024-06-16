@@ -9,13 +9,13 @@ import lombok.Data;
 
 @Entity
 @Data
-public class BillItem {
+public class ItemSelected {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@ManyToOne
-	private Bill bill;
+	private Cart cart;
 	
 	@ManyToOne
 	private Product product;

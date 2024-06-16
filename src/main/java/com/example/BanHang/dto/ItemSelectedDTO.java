@@ -6,11 +6,11 @@ import jakarta.validation.constraints.Min;
 import lombok.Data;
 
 @Data
-public class BillItemDTO {
+public class ItemSelectedDTO {
 	private int id;
 	
-	@JsonIgnoreProperties("billItems")
-	private BillDTO billDTO;
+	@JsonIgnoreProperties("items")
+	private CartDTO cartDTO;
 	
 	private ProductDTO productDTO;
 	

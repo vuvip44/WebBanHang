@@ -1,10 +1,9 @@
 package com.example.BanHang.dto;
 
+import java.io.File;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,7 +25,7 @@ public class UserDTO {
 	private Date birthdate;
 	
 	@JsonIgnore
-	private MultipartFile file;
+	private File file;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -35,5 +34,5 @@ public class UserDTO {
 	
 	
 	
-	private List<RoleDTO> roles;
+	private RoleDTO roles;
 }

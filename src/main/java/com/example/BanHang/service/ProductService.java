@@ -53,6 +53,8 @@ class ProductServiceImpl implements ProductService{
 		product.setCategory(category);
 		productRepo.save(product);
 		productDTO.setId(product.getId());
+		productDTO.setCreateAt(product.getCreatedAt());
+		productDTO.getCategoryDTO().setName(category.getName());
 	}
 
 	@Override

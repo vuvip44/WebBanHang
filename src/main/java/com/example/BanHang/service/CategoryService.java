@@ -18,6 +18,8 @@ public interface CategoryService {
 	void deleteById(int id);
 	
 	CategoryDTO searchByName(String name);
+	
+	CategoryDTO getById(int id);
 }
 @Service
 class CategoryServiceImpl implements CategoryService{
@@ -60,6 +62,14 @@ class CategoryServiceImpl implements CategoryService{
 		Category category=categoryRepo.searchByName(name);
 		CategoryDTO categoryDTO=convertToDto(category);
 		return categoryDTO;
+	}
+
+	@Override
+	public CategoryDTO getById(int id) {
+		// TODO Auto-generated method stub
+		Category category=categoryRepo.findById(id).orElseThrow(NoResultException::new);
+		
+		return new ModelMapper().map(category, CategoryDTO.class);
 	}
 	
 }

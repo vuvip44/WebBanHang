@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.BanHang.dto.BillDTO;
 import com.example.BanHang.dto.PageDTO;
 import com.example.BanHang.dto.ProductDTO;
 import com.example.BanHang.dto.ResponseDTO;

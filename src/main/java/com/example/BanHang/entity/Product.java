@@ -1,16 +1,9 @@
 package com.example.BanHang.entity;
 
-import java.util.List;
-
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,13 +21,14 @@ public class Product extends TimeAuditable{
 	private double price;
 	private int unitStock;
 	
-	//1 product co nhieu anh
-	@ElementCollection(fetch=FetchType.EAGER)
-	@CollectionTable(name="product_images",
-	joinColumns = @JoinColumn(name="product_id"))
-	@Column(name="image")
-	private List<String> images;
+	
+//	private String images;
 	
 	@ManyToOne
 	private Category category;
 }
+//1 product co nhieu anh
+//@ElementCollection(fetch=FetchType.EAGER)
+//@CollectionTable(name="product_images",
+//joinColumns = @JoinColumn(name="product_id"))
+//@Column(name="image")

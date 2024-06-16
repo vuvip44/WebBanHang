@@ -18,15 +18,17 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/admin/role")
-public class RoleControlller {
-	@Autowired
+@RequestMapping("/role")
+public class RoleController {
+	@Autowired // DI : dependency inject
 	RoleService roleService;
-	
+
 	@PostMapping("/")
-	public ResponseDTO<Void> create(@RequestBody @Valid RoleDTO roleDTO){
+	public ResponseDTO<Void> create(
+			@RequestBody @Valid RoleDTO roleDTO) {
 		roleService.create(roleDTO);
-		return ResponseDTO.<Void>builder().status(200).msg("ok").build();
+		return ResponseDTO.<Void>builder().status(200)
+				.msg("ok").build();
 	}
 	
 	@DeleteMapping("/{id}")

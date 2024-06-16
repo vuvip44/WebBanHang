@@ -3,6 +3,7 @@ package com.example.BanHang.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,14 +21,18 @@ import jakarta.validation.Valid;
 @RequestMapping("/admin/category")
 public class CategoryController {
 	@Autowired
-	CategoryService categoryService;
-	
-	@PostMapping("/")
-	public ResponseDTO<CategoryDTO> create(@RequestBody @Valid CategoryDTO categoryDTO){
-		categoryService.create(categoryDTO);
-		return ResponseDTO.<CategoryDTO>builder().
-				status(200).msg("ok").data(categoryDTO).build();
-	}
+    private CategoryService categoryService;
+
+    @PostMapping("/")
+    public ResponseDTO<CategoryDTO> create(@RequestBody @Valid CategoryDTO categoryDTO) {
+        
+        categoryService.create(categoryDTO);
+        return ResponseDTO.<CategoryDTO>builder()
+                .status(200)
+                .msg("ok")
+                .data(categoryDTO)
+                .build();
+    }
 	
 	@DeleteMapping("/{id}")
 	public ResponseDTO<Void> delete(@PathVariable("id") int id){
@@ -43,8 +48,14 @@ public class CategoryController {
 				status(200).msg("ok").data(categoryDTO).build();
 	}
 	
-	@GetMapping("/")
-	public ResponseDTO<CategoryDTO> getById(@RequestBody @Valid String name){
+	@GetMapping("/{id}")
+	public ResponseDTO<CategoryDTO> getById(@PathVariable("id") int id){
+		
+		return ResponseDTO.<CategoryDTO>builder().status(200).msg("ok").data(categoryService.getById(id)).build();
+	}
+	
+	@GetMapping("/search")
+	public ResponseDTO<CategoryDTO> searchName(@RequestBody @Valid String name){
 		CategoryDTO categoryDTO= categoryService.searchByName(name);
 		return ResponseDTO.<CategoryDTO>builder().
 				status(200).msg("ok").data(categoryDTO).build();

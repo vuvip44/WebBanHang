@@ -6,9 +6,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.BanHang.dto.PageDTO;
 import com.example.BanHang.dto.RoleDTO;
@@ -31,72 +31,48 @@ class RoleServiceImpl implements RoleService{
 	@Autowired
 	RoleRepo roleRepo;
 
-	@Override
+	@Transactional
 	public void create(RoleDTO roleDTO) {
-		// TODO Auto-generated method stub
-		Role role=new ModelMapper().map(roleDTO, Role.class);
+		Role role = new ModelMapper().map(roleDTO, Role.class);
 		roleRepo.save(role);
+		// tra ve idsau khi tao
+		roleDTO.setId(role.getId());
 	}
 
-	@Override
+	@Transactional
 	public void update(RoleDTO roleDTO) {
-		// TODO Auto-generated method stub
-		Role role=roleRepo.findById(roleDTO.getId()).orElse(null);
-		if(role!=null) {
-			role.setName(roleDTO.getName());
-		}
+		Role role = roleRepo.findById(roleDTO.getId()).orElseThrow(jakarta.persistence.NoResultException::new);
+		role.setName(roleDTO.getName());
+
 		roleRepo.save(role);
 	}
 
-	@Override
+	@Transactional
 	public void delete(int id) {
-		// TODO Auto-generated method stub
 		roleRepo.deleteById(id);
 	}
-	
-	private RoleDTO convertToDto(Role role) {
+
+	public PageDTO<RoleDTO> search(SearchDTO searchDTO) {
+		Pageable pageable = PageRequest.of(searchDTO.getCurrentPage(), searchDTO.getSize());
+
+		Page<Role> pageRS = roleRepo.searchByName(searchDTO.getKeyword(), pageable);
+
+		return PageDTO.<RoleDTO>builder()
+				.totalPages(pageRS.getTotalPages())
+				.totalElements(pageRS.getTotalElements())
+				.data(pageRS.get()
+						.map(r -> convert(r)).collect(Collectors.toList()))
+				.build();
+	}
+
+	private RoleDTO convert(Role role) {
 		return new ModelMapper().map(role, RoleDTO.class);
 	}
-	
+
 	@Override
 	public PageDTO<RoleDTO> searchByName(SearchDTO searchDTO) {
 		// TODO Auto-generated method stub
-		Sort sort=Sort.by("id").ascending();
-		
-		if(StringUtils.hasText(searchDTO.getSortedField())) {
-			sort=Sort.by(searchDTO.getSortedField()).ascending();
-		}
-		
-		if(searchDTO.getCurrentPage()==null) {
-			searchDTO.setCurrentPage(0);
-		}
-		
-		if(searchDTO.getSize()==null) {
-			searchDTO.setSize(5);
-		}
-		
-		if(searchDTO.getKeyword()==null) {
-			searchDTO.setKeyword("");
-		}
-		
-		PageRequest pageRequest=PageRequest.of(searchDTO.getCurrentPage(), searchDTO.getSize(),sort);
-		
-		Page<Role> page=roleRepo.searchByName(searchDTO.getKeyword(),pageRequest);
-		
-//		PageDTO<List<RoleDTO>> pageDTO=new PageDTO<List<RoleDTO>>();
-//		
-//		pageDTO.setTotalPages(page.getTotalPages());
-//		
-//		pageDTO.setTotalElements(page.getTotalElements());
-//		
-//		List<RoleDTO> roleDTOs=page.get().map(u->convertToDto(u)).collect(Collectors.toList());
-//		
-//		pageDTO.setData(roleDTOs);
-//		return pageDTO;
-		return PageDTO.<RoleDTO>builder().
-				totalPages(page.getTotalPages()).
-				totalElements(page.getTotalElements()).
-				data(page.get().map(u->convertToDto(u)).collect(Collectors.toList())).build();
+		return null;
 	}
 	
 	
