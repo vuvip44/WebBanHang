@@ -16,6 +16,8 @@ import com.example.BanHang.dto.SearchDTO;
 import com.example.BanHang.entity.Role;
 import com.example.BanHang.repository.RoleRepo;
 
+import jakarta.persistence.NoResultException;
+
 public interface RoleService {
 	void create(RoleDTO roleDTO);
 	
@@ -23,7 +25,9 @@ public interface RoleService {
 	
 	void delete(int id);
 	
-	PageDTO<RoleDTO> searchByName(SearchDTO searchDTO);
+	RoleDTO getById(int id);
+	
+	
 }
 
 @Service
@@ -70,9 +74,10 @@ class RoleServiceImpl implements RoleService{
 	}
 
 	@Override
-	public PageDTO<RoleDTO> searchByName(SearchDTO searchDTO) {
+	public RoleDTO getById(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		Role role=roleRepo.findById(id).orElseThrow(NoResultException::new);
+		return new ModelMapper().map(role, RoleDTO.class);
 	}
 	
 	

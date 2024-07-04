@@ -2,6 +2,7 @@ package com.example.BanHang.dto;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,7 +16,7 @@ public class UserDTO {
 	
 	private int id;
 	private String name;
-	private String avatar;
+//	private String avatar;
 	private String username;
 	private String password;
 	private String email;
@@ -24,8 +25,8 @@ public class UserDTO {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date birthdate;
 	
-	@JsonIgnore
-	private File file;
+//	@JsonIgnore
+//	private File file;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -34,5 +35,5 @@ public class UserDTO {
 	
 	
 	
-	private RoleDTO roles;
+	private List<RoleDTO> roles;
 }

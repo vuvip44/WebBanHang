@@ -12,6 +12,6 @@ public class RoleDTO {
 
 	// javax.validation
 	@NotBlank
-	@Size(min = 6, max = 20)
+	
 	private String name;
 }

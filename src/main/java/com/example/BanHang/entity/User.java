@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -24,7 +25,7 @@ public class User extends TimeAuditable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
-	private String avatar;
+//	private String avatar;
 	private String username;
 	private String password;
 	private String email;
@@ -34,9 +35,9 @@ public class User extends TimeAuditable{
 	
 
 	
-	@OneToOne(fetch = FetchType.EAGER)
-//	@JoinTable(name="user_role",
-//	joinColumns = @JoinColumn(name="user_id"),
-//	inverseJoinColumns = @JoinColumn(name="role_id"))
-	private Role roles;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name="user_role",
+	joinColumns = @JoinColumn(name="user_id"),
+	inverseJoinColumns = @JoinColumn(name="role_id"))
+	private List<Role> roles;
 }
